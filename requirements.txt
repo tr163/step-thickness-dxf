@@ -1,0 +1,2 @@
+# DxfDocument 用的是 cadquery 内部实现，版本锁死 2.8.0
+cadquery==2.8.0
