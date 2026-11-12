@@ -12,6 +12,14 @@
 
 每个 DXF = 一个零件的切割轮廓（外轮廓 + 所有孔），单位 mm，1:1。
 
+## 下载（免安装）
+
+不想装 Python 的话，直接下载便携版，解压即用：
+
+**[⬇ step-thickness-dxf-portable-win64.zip](https://github.com/tr163/step-thickness-dxf/releases/latest)**（347 MB，解压后约 1.3 GB，内含完整 Python 环境）
+
+解压后双击 `拖到这里转DXF.bat`，把 STEP 文件或文件夹拖上去就行。
+
 ## 用法
 
 把 STEP 文件（可多选）或整个文件夹，拖到 `拖到这里转DXF.bat` 上，等黑窗口跑完。
@@ -24,16 +32,16 @@ python step2dxf.py 零件.step
 python step2dxf.py 图纸目录 -o 输出目录
 ```
 
-## 安装
+## 从源码运行
 
 需要 Python 3.10+ 和 cadquery 2.8.0（OCP 很大，装起来慢是正常的）：
 
 ```bash
 pip install -r requirements.txt
+python step2dxf.py 零件.step
 ```
 
-`python/` 是一个自带全套依赖的便携解释器（1.3 GB），**不在仓库里**。
-放了它 bat 会优先用它，什么都不用装；没有就退回到系统的 `python`。
+仓库里没有 `python/` 目录。如果本地放了便携版解释器，bat 会优先用它；没有就退回系统 `python`。
 
 ## 原理
 
@@ -44,10 +52,18 @@ pip install -r requirements.txt
 
 - 只适合平板类零件：钣金、碳板、玻纤板、亚克力、木板
 - 曲面件没有平面 → 跳过并提示
-- 车削件（螺丝、轴）导出的是端面轮廓，不是侧视图
+- 车削件（螺丝、轴）导出的是端面轮廓，不是侧视图，别拿去切割
 - 装配体里的垫片、螺钉也会各出一个 DXF，切割前删掉那些怪厚度文件夹即可
 - 一个 STEP 多个实体 → `名字_1.dxf`、`名字_2.dxf`
+- 中文路径没问题；杀毒软件首次扫描 `python.exe` 会慢几秒
+
+## 出问题
+
+- 双击没反应 / 一闪而过：右键 bat → 编辑，看报错；或把 STEP 单独拖上去试
+- 报「读入失败」：文件损坏或不是标准 STEP，先用 CAD 打开另存一次
+- 报「拒绝访问 / WinError 5」：火绒 / 360 / 联想电脑管家等拦截写文件，
+  把工具整个文件夹加入信任区即可
 
 ## 许可
 
-MIT
+[MIT](LICENSE)
